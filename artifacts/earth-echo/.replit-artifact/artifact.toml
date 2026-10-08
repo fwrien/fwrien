@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "EARTH//ECHO"
+description = "A mobile-first interactive experience that turns Earth-science data into visual patterns and sound, with an accessible temperature sonification dashboard, blind listening mode, methodology, and transparent source attribution."
+version = "1.0.0"
+id = "artifacts/earth-echo"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21221
+
+[services.development]
+run = "pnpm --filter @workspace/earth-echo run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/earth-echo", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/earth-echo/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21221"
+BASE_PATH = "/"
